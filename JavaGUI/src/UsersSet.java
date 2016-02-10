@@ -8,6 +8,7 @@ public class UsersSet {
 
 	private BufferedReader bir;
 	private HashSet<User> usersSet = new HashSet<User>();
+	private int x = 0;
 	
 	
 	public UsersSet() throws FileNotFoundException, IOException {
