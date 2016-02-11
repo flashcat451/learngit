@@ -2,16 +2,19 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.MenuBar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
-public class PictureDrawer extends JPanel  implements Runnable, MouseListener,function
+public class PictureDrawer extends JPanel  implements Runnable, MouseListener,function,ActionListener
 {
   private static final long serialVersionUID = 1L;
   public PictureDrawer()
@@ -23,9 +26,23 @@ public class PictureDrawer extends JPanel  implements Runnable, MouseListener,fu
 	  this.frame.setResizable(false);
 	  //Menu settings
 	  JMenuBar menubar1 = new JMenuBar();
-	  JMenu menu1 = new JMenu("menu");
+	  JMenuItem item1 = new JMenuItem("BACK 2 MENU");
+	  JMenuItem item2 = new JMenuItem("QUIT");
+	  JMenuItem item3 = new JMenuItem("LEADERBOARD");
+	  
+	  JMenu menu1 = new JMenu("MENU");
 	  this.frame.setJMenuBar(menubar1);
 	 menubar1.add(menu1);
+	 menu1.add(item1);
+	 menu1.add(item2);
+	 menu1.add(item3);
+	 item1.addActionListener(this);
+	 item1.setActionCommand("r");
+	 item2.addActionListener(this);
+	 item2.setActionCommand("q");
+	 item3.addActionListener(this);
+	 item3.setActionCommand("l");
+	 
 	 
 	 
 
@@ -64,7 +81,32 @@ public class PictureDrawer extends JPanel  implements Runnable, MouseListener,fu
   
   JFrame frame = new JFrame();
   int gameOver = 0;
+  boolean leaderBoarding = false;//Whether the panel is displaying the highscores
 
+//菜单栏
+@Override
+public void actionPerformed(ActionEvent e) {
+	switch (e.getActionCommand().charAt(0)) {
+	case 'r':
+		this.frame.dispose();
+		new FirstTry();
+		break;
+	case 'q':
+		this.frame.dispose();
+		break;
+	case'l':
+		leaderBoarding = true;
+		
+		break;
+	}
+	
+}
+  
+  
+  
+  
+  
+  
   Font font = new Font("Impact", Font.BOLD, 40);
   public void paint(Graphics g)
   {
@@ -73,7 +115,7 @@ public class PictureDrawer extends JPanel  implements Runnable, MouseListener,fu
 	  g.setColor(new Color(151));
 	  g.fillRect(0, 0, 1000, 600);
 	
-	  if(gameOver !=1){
+	  if(gameOver !=1 && !leaderBoarding){
     
     drawPlayer(g, this.yellowBall, yellowBall.color);
     
@@ -92,10 +134,14 @@ public class PictureDrawer extends JPanel  implements Runnable, MouseListener,fu
     		// ate();
     		gameOver=isCollition(yellowBall, eachEnemy);
     }
-	  }// end while
+	  }// end if
 	 // g.setFont();
-	  else{
+	  else if(gameOver == 1 && !leaderBoarding){
 		  gameOver(g);
+	  }
+	  else if(leaderBoarding){
+		  Scores scores = new Scores();
+		  scores.displayScores(g);
 	  }
     	
     }
@@ -187,8 +233,10 @@ public class PictureDrawer extends JPanel  implements Runnable, MouseListener,fu
   public void mouseExited(MouseEvent e)
   {
   }
-  
- 
+
+
+
+    
   
 }
 

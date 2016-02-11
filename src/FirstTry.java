@@ -86,6 +86,7 @@ public class FirstTry extends JFrame {
 		this.setVisible(true);
 	}
 	
+	
 	public void paintComponent(Graphics g) {
 	}
 	

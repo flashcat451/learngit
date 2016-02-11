@@ -122,5 +122,6 @@ default void gameOver(Graphics g){
 	//@SuppressWarnings("unused")
 	//frame2 b = new frame2();
 }
+
 }
 
